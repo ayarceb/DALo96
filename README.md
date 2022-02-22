@@ -10,4 +10,4 @@ The Lorenz 96 model is defined by
 
 where the index  ![img](http://latex.codecogs.com/svg.latex?i) is cyclic which means ![img](http://latex.codecogs.com/svg.latex?x_%7B-1%7D%3Dx_%7Bn-1%7D), ![img](http://latex.codecogs.com/svg.latex?x_%7B0%7D%3Dx_%7Bn%7D)   and   ![img](http://latex.codecogs.com/svg.latex?x_%7Bn%2B1%7D%3Dx_%7B1%7D)
 
-![Alt text](https://github.com/ayarceb/Data-Assimilation-interactive-tool/front.png?raw=true)
+![Alt text](https://github.com/ayarceb/Data-Assimilation-interactive-tool/front.png)
