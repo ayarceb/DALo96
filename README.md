@@ -5,7 +5,9 @@ The forcing parameter can be adjusted in the slider and it can be disturbed with
 
 The Lorenz 96 model is
 
-![formula](https://render.githubusercontent.com/render/math?math=e^{i \pi} = -1)
 
+
+
+![img](http://latex.codecogs.com/svg.latex?%5Cfrac%7B%5Csigma%7D%7B%5Cmu%7D)
 
 
