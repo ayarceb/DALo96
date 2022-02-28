@@ -12,6 +12,7 @@ DALo96 main purpose is to be a tool for explain general concepts of different Da
 
 - EnKF
 - EnKF Schur Product covariance localization
+- EnKF Modified Cholesky
 - EnKS
 - EnKS Modified Cholesky
 
