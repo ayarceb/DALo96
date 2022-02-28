@@ -20,7 +20,7 @@ For the different implementation the forcing parameter ![img](http://latex.codec
 ![img](http://latex.codecogs.com/svg.latex?%5CsimN%28F_0%2C%5Cgamma%29) to generate the ensemble space that promotes freedom degrees for a number of model propagations.
 The forcing parameter can be adjusted in the slider and it can be disturbed with a multiplicative factor with a input knob.
 
-
+<img src="https://render.githubusercontent.com/render/math?math=e^{i \pi} = -1">
 
 ![App Lorenz 96](https://github.com/ayarceb/Data-Assimilation-interactive-tool/blob/main/front.png)
 
