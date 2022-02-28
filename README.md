@@ -15,10 +15,11 @@ DALo96 main purpose is to be a tool for explain general concepts of different Da
 - EnKS
 - EnKS Modified Cholesky
 
-For the different implementation the forcing parameter ![img](http://latex.codecogs.com/svg.latex?%2BF) is disturbed with an aditive noise ![img](http://latex.codecogs.com/svg.latex?%5Csim+N%28F_o%2C%5Cgamma+%29) to generate the ensemble space that promotes freedom degrees for a number of model propagations.
+For the different implementation the forcing parameter ![img](http://latex.codecogs.com/svg.latex?%2BF) is disturbed with an aditive noise
+![img](http://latex.codecogs.com/svg.latex?%5Csim+N%28F_o%2C%5Cgamma+%29) to generate the ensemble space that promotes freedom degrees for a number of model propagations.
 The forcing parameter can be adjusted in the slider and it can be disturbed with a multiplicative factor with a input knob.
 
-
+![img](http://latex.codecogs.com/svg.latex?%5Csim+N%28F_o%2C%5Cgamma+%29)
 
 ![App Lorenz 96](https://github.com/ayarceb/Data-Assimilation-interactive-tool/blob/main/front.png)
 
