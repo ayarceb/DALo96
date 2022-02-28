@@ -23,3 +23,5 @@ The forcing parameter <img src="https://render.githubusercontent.com/render/math
 ![App Lorenz 96](https://github.com/ayarceb/Data-Assimilation-interactive-tool/blob/main/front.png)
 
 App developed in App designer in Matlab R2021b
+
+Modified Cholesky DA inspired *from Nino-Ruiz, E. D., Sandu, A., & Deng, X. (2018). An ensemble Kalman filter implementation based on modified Cholesky decomposition for inverse covariance matrix estimation. SIAM Journal on Scientific Computing, 40(2), A867-A886.*
