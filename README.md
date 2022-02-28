@@ -15,7 +15,7 @@ DALo96 main purpose is to be a tool for explain general concepts of different Da
 - EnKS
 - EnKS Modified Cholesky
 
-For the different implementation the forcing parameter ![img](http://latex.codecogs.com/svg.latex?%2BF) is disturbed with an aditive noise
+For the different implementation the forcing parameter ![img](http://latex.codecogs.com/svg.latex?%F) is disturbed with an aditive noise
 ![img](http://latex.codecogs.com/svg.latex?%5CsimN%28F_0%2C%5Cgamma%29) to generate the ensemble space that promotes freedom degrees for a number of model propagations.
 The forcing parameter can be adjusted in the slider and it can be disturbed with a multiplicative factor with a input knob.
 
