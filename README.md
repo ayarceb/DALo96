@@ -1,5 +1,5 @@
 # Data-Assimilation-interactive-tool for the Lorenz 96 
-The interactive tool DALo96(V0.1) lets explore the Lorenz 96 dynamics in a range of configuration that the user can modify.
+The interactive tool DALo96(V0.1) lets explore the Lorenz 96 dynamics changing the simulation configuration interactively.
 
 The Lorenz 96 model is defined by
 
@@ -18,10 +18,8 @@ DALo96 main purpose is to be a tool for explain general concepts of different Da
 
 For the different implementation the forcing parameter <img src="https://render.githubusercontent.com/render/math?math=F"> is disturbed with an aditive noise
 <img src="https://render.githubusercontent.com/render/math?math=\sim N(F_0,\gamma)"> to generate the ensemble space that promotes freedom degrees for a number of model propagations.
-The forcing parameter can be adjusted in the slider and it can be disturbed with a multiplicative factor with a input knob.
-
-\sim N(F_0,\gamma)
+The forcing parameter <img src="https://render.githubusercontent.com/render/math?math=F_0"> can be adjusted in the slider and it can be disturbed with a multiplicative factor <img src="https://render.githubusercontent.com/render/math?math=\gamma"> with a knob.
 
 ![App Lorenz 96](https://github.com/ayarceb/Data-Assimilation-interactive-tool/blob/main/front.png)
 
-App developed in App designer in Matlab
+App developed in App designer in Matlab R2021b
