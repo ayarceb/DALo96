@@ -1,4 +1,4 @@
-# Data-Assimilation-interactive-tool
+# Data-Assimilation-interactive-tool for the Lorenz 96 
 The interactive tool DALo96(V0.1) lets explore the Lorenz 96 dynamics in a range of configuration that the user can modify.
 
 The Lorenz 96 model is defined by
