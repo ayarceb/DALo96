@@ -25,6 +25,6 @@ wich are assumed to be normally distributed
 Where the mean is assumed to be <img src="https://render.githubusercontent.com/render/math?math=x^b">
 and a covariance matrix <img src="https://render.githubusercontent.com/render/math?math=B \in \Re^{n\times n}">. The observations are also assumed normal distributed 
 
-<img src="https://render.githubusercontent.com/render/math?math=y\sim \mathcal{N}\left(H\cdot x^*,R\right)
+<img src="https://render.githubusercontent.com/render/math?math=y \sim \mathcal{N}\left(H\cdot x^*,R\right)
 
 where  <img src="https://render.githubusercontent.com/render/math?math=B \in \Re^{n\times n}"> is the background error covariance matrix,  <img src="https://render.githubusercontent.com/render/math?math=H \in \Re^{m\times n}"> is a linear operator that propagates the state space into the observation space, and  <img src="https://render.githubusercontent.com/render/math?math=R \in \Re^{m\times m}"> is the observation error covariance matrix. 
