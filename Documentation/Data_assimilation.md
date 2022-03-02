@@ -28,3 +28,12 @@ and a covariance matrix <img src="https://render.githubusercontent.com/render/ma
 <img src="https://render.githubusercontent.com/render/math?math=y \sim \mathcal{N}\left(H\cdot x^*,R\right)">
 
 where  <img src="https://render.githubusercontent.com/render/math?math=B \in \Re^{n\times n}"> is the background error covariance matrix,  <img src="https://render.githubusercontent.com/render/math?math=H \in \Re^{m\times n}"> is a linear operator that propagates the state space into the observation space, and  <img src="https://render.githubusercontent.com/render/math?math=R \in \Re^{m\times m}"> is the observation error covariance matrix. 
+
+
+## EnKF
+## EnKF Schur Product covariance localization
+## EnKF Modified Cholesky
+## EnKS
+## EnKS Modified Cholesky
+
+
