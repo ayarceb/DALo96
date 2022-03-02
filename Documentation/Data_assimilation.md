@@ -10,8 +10,8 @@ The benefit of sequential DA methods is to estimate the current state <img src="
    <img src="https://render.githubusercontent.com/render/math?math=\mathbf{x}^*_{k}=\mathcal{M}_{(k-1) \rightarrow k}( \mathbf{x}^{*}_{(k-1)})">
 
 
-Where k denotes de time index, and the  $\mathcal{M}$ represents the model operator of the dynamics for instance. This estimation is performed based of a first guess or prior estimate $x^b \in \Re^{n\times 1}$ of $\mathbf{x}^*$,
-In ensembled-based methods, an ensemble of $N$ model realizations.
+Where  <img src="https://render.githubusercontent.com/render/math?math=k"> denotes de time index, and the  <img src="https://render.githubusercontent.com/render/math?math=\mathcal{M}"> represents the model operator of the dynamics for instance. This estimation is performed based of a first guess or prior estimate  <img src="https://render.githubusercontent.com/render/math?math=x^b \in \Re^{n\times 1}$ of $\mathbf{x}^*">,
+In ensembled-based methods, an ensemble of <img src="https://render.githubusercontent.com/render/math?math=N"> model realizations.
 
 
   <img src="https://render.githubusercontent.com/render/math?math=\mathbf{X}_k^b=[\mathbf{x}_k^{b[1]},\mathbf{x}_k^{b[2]},..,\mathbf{x}_k^{b[N]}] \in \mathbb{R}^{n\times N}">
@@ -20,13 +20,13 @@ In ensembled-based methods, an ensemble of $N$ model realizations.
 wich are assumed to be normally distributed
 
 
-  <img src="https://render.githubusercontent.com/render/math?math=  x \sim \mathcal{N}(x^b,B)">
+  <img src="https://render.githubusercontent.com/render/math?math=x \sim \mathcal{N}(x^b,B)">
 
-Where the mean is assumed to be $x^b$
-and a covariance matrix $B \in \Re^{n\times n}$. The observations are also assumed normal distributed 
-
-
-    <img src="https://render.githubusercontent.com/render/math?math=   y \sim \mathcal{N}\left(H\cdot x^*,R\right)">
+Where the mean is assumed to be <img src="https://render.githubusercontent.com/render/math?math=x^b">
+and a covariance matrix <img src="https://render.githubusercontent.com/render/math?math=B \in \Re^{n\times n}">. The observations are also assumed normal distributed 
 
 
-where $B \in \Re^{n\times n}$ is the background error covariance matrix, $H \in \Re^{m\times n}$ is a linear operator that propagates the state space into the observation space, and $R \in \Re^{m\times m}$ is the observation error covariance matrix. 
+    <img src="https://render.githubusercontent.com/render/math?math=y \sim \mathcal{N}\left(H\cdot x^*,R\right)">
+
+
+where  <img src="https://render.githubusercontent.com/render/math?math=B \in \Re^{n\times n}"> is the background error covariance matrix,  <img src="https://render.githubusercontent.com/render/math?math=H \in \Re^{m\times n}"> is a linear operator that propagates the state space into the observation space, and  <img src="https://render.githubusercontent.com/render/math?math=R \in \Re^{m\times m}"> is the observation error covariance matrix. 
