@@ -1,10 +1,10 @@
-# Data assimilation (DA) 
+# Data Assimilation (DA) 
 
 is a mathematical process that is used to incorporate observations in a dynamic model,
 to improve its representation of the reality.
 
 
-The benefit of sequential DA methods is to estimate the current state $\mathbf{x}^* \in \Re^{n\times 1}$ of a dynamical system that evolves according to some numerical model operator, where $n$ is the number of states \cite{Evensen1994,Anderson1999},
+The benefit of sequential DA methods is to estimate the current state <img src="https://render.githubusercontent.com/render/math?math=  \mathbf{x}^* \in \Re^{n\times 1}"> of a dynamical system that evolves according to some numerical model operator, where <img src="https://render.githubusercontent.com/render/math?math= n "> is the number of states \cite{Evensen1994,Anderson1999},
 
 
    <img src="https://render.githubusercontent.com/render/math?math=\mathbf{x}^*_{k}=\mathcal{M}_{(k-1) \rightarrow k}( \mathbf{x}^{*}_{(k-1)})">
