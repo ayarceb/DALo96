@@ -40,7 +40,7 @@ where  <img src="https://render.githubusercontent.com/render/math?math=B \in \Re
 The expression for the analysis given <img src="https://render.githubusercontent.com/render/math?math=n">  observations in the Data assimilation window for the smoother technique is given by the following expression
 
 
-   <img src="https://render.githubusercontent.com/render/math?math=\mathbf{x}^*_{k}=\mathcal{M}_{(k-1) \rightarrow k}( \mathbf{x}^{*}_{(k-1)})">
+   <img src="https://render.githubusercontent.com/render/math?math=\mathbf{x}^a=\mathbf{x}^b+\sum_{k=1}^s[\mathbf{B}_{0,k}^{-1}+\mathbf{H}_{k}^{T}">
 
 
 
