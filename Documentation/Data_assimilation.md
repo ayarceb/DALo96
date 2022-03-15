@@ -40,7 +40,7 @@ where  <img src="https://render.githubusercontent.com/render/math?math=B \in \Re
 The expression for the analysis given <img src="https://render.githubusercontent.com/render/math?math=n">  observations in the Data assimilation window for the smoother technique is given by the following expression
 
 
-   <img src="https://render.githubusercontent.com/render/math?math=\mathbf{x}^a=1+3">
+   <img src="https://render.githubusercontent.com/render/math?math=\mathbf{x}^a=1$+$3">
 
 
 
