@@ -40,8 +40,7 @@ where  <img src="https://render.githubusercontent.com/render/math?math=B \in \Re
 The expression for the analysis given <img src="https://render.githubusercontent.com/render/math?math=n">  observations in the Data assimilation window for the smoother technique is given by the following expression
 
 
-   <img src="https://render.githubusercontent.com/render/math?math=\mathbf{x}^a=+">
-
+![formula](https://render.githubusercontent.com/render/math?math=e^{i \pi} = -1)
 
 
 ## EnKS Modified Cholesky
