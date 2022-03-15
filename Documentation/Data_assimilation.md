@@ -32,6 +32,10 @@ where  <img src="https://render.githubusercontent.com/render/math?math=B \in \Re
 
 ## EnKF
 
+The expression for the EnKF analysis is:
+
+<img src="https://render.githubusercontent.com/render/math?math=\mathbf{x}^a=\mathbf{x}^b%2B[\mathbf{P}^{-1}%2B\mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H}]^{-1}\mathbf{H}^{T}\mathbf{R}\mathbf{d}">
+
 
 ## EnKF Schur Product covariance localization
 ## EnKF Modified Cholesky
