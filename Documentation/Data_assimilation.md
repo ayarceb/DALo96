@@ -39,7 +39,9 @@ The expression for the EnKF analysis is:
 
 ## EnKF Schur Product covariance localization
 
-The emergence of misleading or spurious correlations between elements of the state space is inescapable due to the approximation of the state space covariance by a finite number of ensemble members. These spurious correlations can be removed by a precedura called localization. The covariance localization, also known as Schur localization, concentrates on the forecast error covariance matrix, removing longer-range correlations in the error covariances at a given distance. The pointwisemultiplication is called a Schur product and denoted by <img src="https://render.githubusercontent.com/render/math?math=\circ">
+The emergence of misleading or spurious correlations between elements of the state space is inescapable due to the approximation of the state space covariance by a finite number of ensemble members. These spurious correlations can be removed by a precedura called localization. The covariance localization, also known as Schur localization, concentrates on the forecast error covariance matrix, removing longer-range correlations in the error covariances at a given distance. The pointwisemultiplication is called a Schur product and denoted by <img src="https://render.githubusercontent.com/render/math?math=\circ">:
+
+<img src="https://render.githubusercontent.com/render/math?math=f   \circ    \boldsymbol{P}^f]_{i,j}=[\boldsymbol{P}^f]_{i,j}[f]_{i,j}">
 
 
 ## EnKF Modified Cholesky
