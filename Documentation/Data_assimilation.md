@@ -36,7 +36,7 @@ The expression for the EnKF analysis is:
 
 <img src="https://render.githubusercontent.com/render/math?math=\mathbf{x}^a=\mathbf{x}^b%2B[\mathbf{P}^{-1}%2B\mathbf{H}^{T}\mathbf{R}^{-1}\mathbf{H}]^{-1}\mathbf{H}^{T}\mathbf{R}\mathbf{d}">
 
-where where  <img src="https://render.githubusercontent.com/render/math?math=\mathbf{d}">
+where  <img src="https://render.githubusercontent.com/render/math?math=\mathbf{d}"> is the innovation term (difference between the observations and the model in the observation sites)
 
 ## EnKF Schur Product covariance localization
 
@@ -46,6 +46,9 @@ The emergence of misleading or spurious correlations between elements of the sta
 
 
 ## EnKF Modified Cholesky
+
+The computation of the inverse covariance matrix via MC has two fold benefits: the former is the contruction of a localized matrix from the coefficient calculations and the generation of a sparse matrix that for large scale problems may benefit calculation and storage.
+
 ## EnKS
 
 The expression for the analysis given <img src="https://render.githubusercontent.com/render/math?math=n">  observations in the Data assimilation window for the smoother technique is given by the following expression
