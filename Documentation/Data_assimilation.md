@@ -47,6 +47,10 @@ The emergence of misleading or spurious correlations between elements of the sta
 
 ## EnKF Modified Cholesky
 
+
+<img src="https://render.githubusercontent.com/render/math?math=\mathbf{x}^a=\mathbf{x}^b%2B\sum_{k=1}^s[\mathbf{B}_{0,k}^{-1}%2B\mathbf{H}_{k}^{T}\mathbf{R_k}^{-1}\mathbf{H}_{k}]^{-1}\mathbf{H}^{T}_{k}\mathbf{R_k}\mathbf{d}_{k}">
+
+
 The computation of the inverse covariance matrix via MC has two fold benefits: the former is the contruction of a localized matrix from the coefficient calculations and the generation of a sparse matrix that for large scale problems may benefit calculation and storage.
 
 ![App Lorenz 96](https://github.com/ayarceb/Data-Assimilation-interactive-tool/blob/main/Cholesky_Dalo96.png)
@@ -54,7 +58,6 @@ The computation of the inverse covariance matrix via MC has two fold benefits: t
 ![App Lorenz 96](https://github.com/ayarceb/Data-Assimilation-interactive-tool/blob/main/Cholesky_Dalo96_2.png)
 
 
-<img src="https://render.githubusercontent.com/render/math?math=\mathbf{x}^a=[\mathbf{B}_{0,k}^{-1}%2B\mathbf{H}_{k}^{T}\mathbf{R_k}^{-1}\mathbf{H}_{k}]^{-1}\mathbf{H}^{T}_{k}\mathbf{R_k}\mathbf{d}_{k}">
 
 
 
@@ -64,8 +67,6 @@ The computation of the inverse covariance matrix via MC has two fold benefits: t
 
 The expression for the analysis given <img src="https://render.githubusercontent.com/render/math?math=n">  observations in the Data assimilation window for the smoother technique is given by the following expression
 
-
-<img src="https://render.githubusercontent.com/render/math?math=\mathbf{x}^a=\mathbf{x}^b%2B\sum_{k=1}^s[\mathbf{B}_{0,k}^{-1}%2B\mathbf{H}_{k}^{T}\mathbf{R_k}^{-1}\mathbf{H}_{k}]^{-1}\mathbf{H}^{T}_{k}\mathbf{R_k}\mathbf{d}_{k}">
 
 
 ## EnKS Modified Cholesky
