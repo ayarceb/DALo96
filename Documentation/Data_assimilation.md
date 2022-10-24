@@ -1,6 +1,6 @@
 # Data Assimilation (DA) 
 
-is a mathematical process that is used to incorporate observations in a dynamic model,
+Is a mathematical process that is used to incorporate observations in a dynamic model,
 to improve its representation of the reality.
 
 
