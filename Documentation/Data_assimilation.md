@@ -54,7 +54,7 @@ The computation of the inverse covariance matrix via MC has two fold benefits: t
 ![App Lorenz 96](https://github.com/ayarceb/Data-Assimilation-interactive-tool/blob/main/Cholesky_Dalo96_2.png)
 
 
- <img src="https://render.githubusercontent.com/render/math?math=\mathbf{P}^{-1}%2B=\mathbf{x}^b%2B\sum_{k=1}^s">
+ <img src="https://render.githubusercontent.com/render/math?math=\mathbf{P}^{-1}">
 
 
 
