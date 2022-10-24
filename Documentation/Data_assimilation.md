@@ -34,6 +34,8 @@ where  <img src="https://render.githubusercontent.com/render/math?math=B \in \Re
 
 The expression for the EnKF analysis is:
 
+<img src="https://render.githubusercontent.com/render/math?math=\mathbf{x}^a=\mathbf{x}^b%2B\sum_{k=1}^s[\mathbf{B}_{0,k}^{-1}%2B\mathbf{H}_{k}^{T}\mathbf{R_k}^{-1}\mathbf{H}_{k}]^{-1}\mathbf{H}^{T}_{k}\mathbf{R_k}\mathbf{d}_{k}">
+
 <img src="https://render.githubusercontent.com/render/math?
 math=\mathbf{x}^a=\mathbf{x}^b%2B\sum_{k=1}^s[\mathbf{B}_{0,k}^{-1}%2B\mathbf{H}_{k}^{T}\mathbf{R_k}^{-1}\mathbf{H}_{k}]^{-1}\mathbf{H}^{T}_{k}\mathbf{R_k}\mathbf{d}_{k}">
 
