@@ -49,6 +49,8 @@ The emergence of misleading or spurious correlations between elements of the sta
 
 The computation of the inverse covariance matrix via MC has two fold benefits: the former is the contruction of a localized matrix from the coefficient calculations and the generation of a sparse matrix that for large scale problems may benefit calculation and storage.
 
+![App Lorenz 96](https://github.com/ayarceb/Data-Assimilation-interactive-tool/blob/main/front_DA.png)
+
 ## EnKS
 
 The expression for the analysis given <img src="https://render.githubusercontent.com/render/math?math=n">  observations in the Data assimilation window for the smoother technique is given by the following expression
