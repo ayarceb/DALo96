@@ -44,6 +44,7 @@ The emergence of misleading or spurious correlations between elements of the sta
 
 <img src="https://render.githubusercontent.com/render/math?math=f   \circ    \boldsymbol{P}^f]_{i,j}=[\boldsymbol{P}^f]_{i,j}[f]_{i,j}">
 
+![App Lorenz 96](https://github.com/ayarceb/Data-Assimilation-interactive-tool/blob/main/Localization.png)
 
 ## EnKF Modified Cholesky
 
