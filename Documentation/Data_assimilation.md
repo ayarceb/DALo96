@@ -10,7 +10,7 @@ The benefit of sequential DA methods is to estimate the current state <img src="
    <img src="https://render.githubusercontent.com/render/math?math=\mathbf{x}^*_{k}=\mathcal{M}_{(k-1) \rightarrow k}( \mathbf{x}^{*}_{(k-1)})">
 
 
-Where  <img src="https://render.githubusercontent.com/render/math?math=k"> denotes de time index, and the  <img src="https://render.githubusercontent.com/render/math?math=\mathcal{M}"> represents the model operator of the dynamics for instance. This estimation is performed based of a first guess or prior estimate  <img src="https://render.githubusercontent.com/render/math?math=x^b \in \Re^{n\times 1}$ of $\mathbf{x}^*">,
+Where  <img src="https://render.githubusercontent.com/render/math?math=k"> denotes de time index, and the  <img src="https://render.githubusercontent.com/render/math?math=\mathcal{M}"> represents the model operator of the dynamics for instance. This estimation is performed based of a first guess or prior estimate  <img src="https://render.githubusercontent.com/render/math?math=x^b \in \Re^{n\times 1}$ of $\mathbf{x}^*">,Cancel changes
 In ensembled-based methods, an ensemble of <img src="https://render.githubusercontent.com/render/math?math=N"> model realizations.
 
 
@@ -54,7 +54,7 @@ The computation of the inverse covariance matrix via MC has two fold benefits: t
 ![App Lorenz 96](https://github.com/ayarceb/Data-Assimilation-interactive-tool/blob/main/Cholesky_Dalo96_2.png)
 
 
- <img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}^{-1}%2=\mathbf{x}^b%2B\sum_{k=1}^s[\mathbf{B}_{0,k}^{-1}%2B\mathbf{H}_{k}^{T}\mathbf{R_k}^{-1}\mathbf{H}_{k}]^{-1}\mathbf{H}^{T}_{k}\mathbf{R_k}\mathbf{d}_{k}">
+ <img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}^{-1}%2B=\mathbf{x}^b%2B\sum_{k=1}^s[\mathbf{B}_{0,k}^{-1}%2B\mathbf{H}_{k}^{T}\mathbf{R_k}^{-1}\mathbf{H}_{k}]^{-1}\mathbf{H}^{T}_{k}\mathbf{R_k}\mathbf{d}_{k}">
 
 
 
