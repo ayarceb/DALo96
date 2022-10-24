@@ -34,7 +34,7 @@ where  <img src="https://render.githubusercontent.com/render/math?math=B \in \Re
 
 The expression for the EnKF analysis is:
 
-<img src="https://render.githubusercontent.com/render/math?math=\mathbf{x}^a=\mathbf{x}^b">
+<img src="https://render.githubusercontent.com/render/math?math=\mathbf{x}^a">
 
 where  <img src="https://render.githubusercontent.com/render/math?math=\mathbf{d}"> is the innovation term (difference between the observations and the model in the observation sites)
 
