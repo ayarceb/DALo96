@@ -129,323 +129,323 @@ end
   meanxa_EnKS(:,i)=mean(Xa(:,:,i),2);                                                                                                                                                                                                                                                                                                                                              
 end
 %% ============================== Scenario EnKS-MC ===================================
-% % %% 
-% % % if select==1
-% % %   
- for i=2:Tsim-M*frequency
-% %======== Forecast Step==========
- 
-%      for en=1:num
-%           [X_S_chol(:,en,i)]=Lorenz_96_one_step(1,dt,squeeze(X_S_chol(:,en,i-1)),F);
-%      end
- for en=1:num
-Dist=fact*randn(num,1);
-      FF=FF+Dist(randi([1 num]),1); 
-        [X_S_chol(:,en,i)]=Lorenz_96_one_step(1,dt,squeeze(Xa(:,en,i-1)),FF);
- end
-        
-      meanxb(:,i)=mean(X_S_chol(:,:,i),2);    
-     
-   for Nen=1:num
-      XXb(:,Nen,i)= X_S_chol(:,Nen,i)-meanxb(:,i);  
-   end
-   
- %  Standard Modified cholesky Background matrix 
-% 
-     % BC(:,:,i)=Calculo_B_Cholesky(XXb,r); %Estimation of Covariance by Modified Cholesky
-      BC(:,:,i)=(Calculo_B_Cholesky(XXb,r)); %Estimation of Covariance by Modified Cholesky
-      
-
- if sum(muestreo==i)   %Validation if there are a observation available
-% %======================== Analysis Step ENKS=========================================
-% 
-     X_aw(:,:,1)=X_S_chol(:,:,i);
-     
-     if M==1
-     B_aw(:,:,1)=BC(:,:,i);    
-     end
-         for kk=2:(M*frequency)
-             for en=1:num    
-                 Dist=fact*randn(num,1);
-      FF=FF+Dist(randi([1 num]),1); 
-        [X_aw(:,en,kk)]=Lorenz_96_one_step(1,dt,squeeze(Xa(:,en,i-1)),FF);
-               %  [X_aw(:,en,kk)]=Lorenz_96_one_step(1,dt,squeeze(X_aw(:,en,kk-1)),F);
-             end
-             meanxb_aw(:,kk)=mean(X_aw(:,:,kk),2);    
-     
-              for Nen=1:num
-                 XXb_aw(:,Nen,kk)= X_aw(:,Nen,kk)-meanxb_aw(:,kk)+0.2*randn(n,1);  
-              end
-   
-               B_aw(:,:,kk)=(Calculo_B_Cholesky(XXb_aw,r));   
-         end
-     aux=0;
-     for kk2=1:frequency:M*frequency
-         K(:,:,kk2)=B_aw(:,:,kk2)*H'*pinv(H*B_aw(:,:,kk2)*H'+R);     % Matriz de Ganancia de Kalman
-         C(:,kk2)= Y(:,i+kk2-1)+sigma*randn(m,1);
-         aux=aux+(K(:,:,kk2)*(C(:,kk2)*ones(1,40)-H*X_aw(:,:,kk2)))/M;
-     end
-%     
-     for en=1:num
-       X_S_chol(:,en,i)=X_S_chol(:,en,i)+aux(:,en);
-     end
-     
-% 
- else 
-   X_S_chol(:,:,i)=X_S_chol(:,:,i);  
- end
-   meanxa_EnKS_chol(:,i)=mean(X_S_chol(:,:,i),2);                                                                                                                                                                                                                                                                                                                                              
- end
-% % 
-%% ============================== Scenario EnKF ======================================
-%if select==1
-for i=2:Tsim-1
-%======== Forecast Step==========
-% foplot(movmean(Error_ENKF,window));hold on
-% plot(movmean(Error_ENKF_schur,window));hold on
-% plot(movmean(Error_ENKF_MC,window));hold on
-% plot(movmean(Error_ENKS,window));hold on
-% plot(movmean(Error_ENKS_chol,window));hold on
-  for en=1:num
-      % FF=7;
-     Dist=fact*randn(num,1); FF=FF+Dist(randi([1 num]),1);
-     [Xb(:,en,i)]=Lorenz_96_one_step(1,dt,squeeze(Xb(:,en,i-1)),FF);
-   end
-  
-     meanxb(:,i)=mean(Xb(:,:,i),2);    
-     
-if sum(muestreo==i)   %Validation if there are a observation available
-%   for Nen=1:N
-%   XXb(:,Nen,i)= Xb(:,Nen,i)-meanxb(:,i);  
-%   end
-    Xbp(:,:,i)=meanxb(:,i)*ones(1,num)+ pfactorEnkf*(Xb(:,:,i)-meanxb(:,i)*ones(1,num));
-    meanXbp(:,i) = mean(Xbp(:,:,i),2);   
-    XXb(:,:,i) =Xbp(:,:,i)-meanXbp(:,i);
-% Standard EnKF Background matrix 
-    Binv=pinv((1/(num-1))*(XXb(:,:,i)*XXb(:,:,i)'));
-%     imagesc(XXb(:,:,i)*XXb(:,:,i)');colorbar;xlabel('states');ylabel('states')
-%     title(sprintf('Ensemble number %i',num))
-%     [L,D, Dsquare]=Calculo_B_CholeskyInc(XXb,r);
-%     Binv = L'*D*L;
-%======================== Analysis Step ENKF=========================================
-muestra=0;     
-%K=B*H'*pinv(H*B*H'+R);     % Matriz de Ganancia de Kalman
-  K2 = (Binv+ H'*(R\H));
-    for en=1:num
-         C(:,i)= Y(:,i)+sigma*randn(m,1); %  Almacenamiento de los datos sint??ticos
-          D= (C(:,i)-H*Xb(:,en,i));   
-         Xa(:,en,i)=Xb(:,en,i)+((K2\H')*(R\D));
-    end
-    Xb(:,:,i)=Xa(:,:,i);
-else
-     Xb(:,:,i)=Xb(:,:,i);
-end
-meanxa_EnKF(:,i)=mean(Xb(:,:,i),2);
-end
-%% ============================== Scenario EnKF_Schur_Localization ===================
-% 
-% if select==1
-%   
- for i=2:Tsim-1
-% %======== Forecast Step==========
-%   for en=1:num
-%       [X_schur(:,en,i)]=Lorenz_96_one_step(1,dt,squeeze(X_schur(:,en,i-1)),F);
-%   end
- 
-   for en=1:num
-      % FF=7;
-      Dist=fact*randn(num,1);
-      FF=FF+Dist(randi([1 num]),1);
-     [X_schur(:,en,i)]=Lorenz_96_one_step(1,dt,squeeze(Xb(:,en,i-1)),FF);
-   end
-   
-  
-     meanxb(:,i)=mean(X_schur(:,:,i),2);    
-     
-if sum(muestreo==i)   %Validation if there are a observation available
-%      
-%    for Nen=1:N
-%       XXb(:,Nen,i)= X_schur(:,Nen,i)-meanxb(:,i);  
-%    end
-%   i
-  Xbp(:,:,i)=meanxb(:,i)*ones(1,num)+ pfactorEnkfS*(X_schur(:,:,i)-meanxb(:,i)*ones(1,num));
-  meanXbp(:,i) = mean(Xbp(:,:,i),2);   
-  XXb(:,:,i) =Xbp(:,:,i)-meanXbp(:,i)*ones(1,num);
-
-% %  Standard EnKF Background matrix 
-% 
-    B=((1/(num-1))*(XXb(:,:,i)*XXb(:,:,i)'));
-    L=localization_matrix(n,radi);
-    B=pinv(L.*B); 
-% %======================== Analysis Step ENKF=========================================
-% muestra=0;     
-%K=B*H'*pinv(H*B*H'+R);     % Matriz de Ganancia de Kalman
- 
-  K2 = (B+ H'*(R\H));
-     for en=1:num
-%          
-          C(:,i)= Y(:,i)+sigma*randn(m,1);        %  Almacenamiento de los datos sint??ticos
-          D= (C(:,i)-H*Xb(:,en,i)); 
-          Xa(:,en,i)=Xb(:,en,i)+(K2\H')*(R\D);
- 
-     end
-     X_schur(:,:,i)=Xa(:,:,i);
-   
-else
-     X_schur(:,:,i)=X_schur(:,:,i);
- end
-
-   meanxa_EnKF_schur(:,i)=mean(X_schur(:,:,i),2); 
- end
-% % 
-% 
-%% ============================== Scenario EnKF_MC ================================== 
+% % % %% 
+% % % % if select==1
+% % % %   
+%  for i=2:Tsim-M*frequency
+% % %======== Forecast Step==========
 %  
-% 
-% 
-% %if select==2
-%   
-% for i=2:Tsim-1
-% %================= Forecast Step==========
-%    for en=1:N
-%      [X_chol(:,en,i)]=Lorenz_96_one_step(1,dt,squeeze(X_chol(:,en,i-1)),F);
+% %      for en=1:num
+% %           [X_S_chol(:,en,i)]=Lorenz_96_one_step(1,dt,squeeze(X_S_chol(:,en,i-1)),F);
+% %      end
+%  for en=1:num
+% Dist=fact*randn(num,1);
+%       FF=FF+Dist(randi([1 num]),1); 
+%         [X_S_chol(:,en,i)]=Lorenz_96_one_step(1,dt,squeeze(Xa(:,en,i-1)),FF);
+%  end
+%         
+%       meanxb(:,i)=mean(X_S_chol(:,:,i),2);    
+%      
+%    for Nen=1:num
+%       XXb(:,Nen,i)= X_S_chol(:,Nen,i)-meanxb(:,i);  
 %    end
 %    
+%  %  Standard Modified cholesky Background matrix 
+% % 
+%      % BC(:,:,i)=Calculo_B_Cholesky(XXb,r); %Estimation of Covariance by Modified Cholesky
+%       BC(:,:,i)=(Calculo_B_Cholesky(XXb,r)); %Estimation of Covariance by Modified Cholesky
+%       
 % 
-%      meanxb(:,i)=mean(X_chol(:,:,i),2);    
-% 
+%  if sum(muestreo==i)   %Validation if there are a observation available
+% % %======================== Analysis Step ENKS=========================================
+% % 
+%      X_aw(:,:,1)=X_S_chol(:,:,i);
+%      
+%      if M==1
+%      B_aw(:,:,1)=BC(:,:,i);    
+%      end
+%          for kk=2:(M*frequency)
+%              for en=1:num    
+%                  Dist=fact*randn(num,1);
+%       FF=FF+Dist(randi([1 num]),1); 
+%         [X_aw(:,en,kk)]=Lorenz_96_one_step(1,dt,squeeze(Xa(:,en,i-1)),FF);
+%                %  [X_aw(:,en,kk)]=Lorenz_96_one_step(1,dt,squeeze(X_aw(:,en,kk-1)),F);
+%              end
+%              meanxb_aw(:,kk)=mean(X_aw(:,:,kk),2);    
+%      
+%               for Nen=1:num
+%                  XXb_aw(:,Nen,kk)= X_aw(:,Nen,kk)-meanxb_aw(:,kk)+0.2*randn(n,1);  
+%               end
+%    
+%                B_aw(:,:,kk)=(Calculo_B_Cholesky(XXb_aw,r));   
+%          end
+%      aux=0;
+%      for kk2=1:frequency:M*frequency
+%          K(:,:,kk2)=B_aw(:,:,kk2)*H'*pinv(H*B_aw(:,:,kk2)*H'+R);     % Matriz de Ganancia de Kalman
+%          C(:,kk2)= Y(:,i+kk2-1)+sigma*randn(m,1);
+%          aux=aux+(K(:,:,kk2)*(C(:,kk2)*ones(1,40)-H*X_aw(:,:,kk2)))/M;
+%      end
+% %     
+%      for en=1:num
+%        X_S_chol(:,en,i)=X_S_chol(:,en,i)+aux(:,en);
+%      end
+%      
+% % 
+%  else 
+%    X_S_chol(:,:,i)=X_S_chol(:,:,i);  
+%  end
+%    meanxa_EnKS_chol(:,i)=mean(X_S_chol(:,:,i),2);                                                                                                                                                                                                                                                                                                                                              
+%  end
+% % % 
+% %% ============================== Scenario EnKF ======================================
+% %if select==1
+% for i=2:Tsim-1
+% %======== Forecast Step==========
+% % foplot(movmean(Error_ENKF,window));hold on
+% % plot(movmean(Error_ENKF_schur,window));hold on
+% % plot(movmean(Error_ENKF_MC,window));hold on
+% % plot(movmean(Error_ENKS,window));hold on
+% % plot(movmean(Error_ENKS_chol,window));hold on
+%   for en=1:num
+%       % FF=7;
+%      Dist=fact*randn(num,1); FF=FF+Dist(randi([1 num]),1);
+%      [Xb(:,en,i)]=Lorenz_96_one_step(1,dt,squeeze(Xb(:,en,i-1)),FF);
+%    end
+%   
+%      meanxb(:,i)=mean(Xb(:,:,i),2);    
+%      
+% if sum(muestreo==i)   %Validation if there are a observation available
+% %   for Nen=1:N
+% %   XXb(:,Nen,i)= Xb(:,Nen,i)-meanxb(:,i);  
+% %   end
+%     Xbp(:,:,i)=meanxb(:,i)*ones(1,num)+ pfactorEnkf*(Xb(:,:,i)-meanxb(:,i)*ones(1,num));
+%     meanXbp(:,i) = mean(Xbp(:,:,i),2);   
+%     XXb(:,:,i) =Xbp(:,:,i)-meanXbp(:,i);
+% % Standard EnKF Background matrix 
+%     Binv=pinv((1/(num-1))*(XXb(:,:,i)*XXb(:,:,i)'));
+% %     imagesc(XXb(:,:,i)*XXb(:,:,i)');colorbar;xlabel('states');ylabel('states')
+% %     title(sprintf('Ensemble number %i',num))
+% %     [L,D, Dsquare]=Calculo_B_CholeskyInc(XXb,r);
+% %     Binv = L'*D*L;
+% %======================== Analysis Step ENKF=========================================
+% muestra=0;     
+% %K=B*H'*pinv(H*B*H'+R);     % Matriz de Ganancia de Kalman
+%   K2 = (Binv+ H'*(R\H));
+%     for en=1:num
+%          C(:,i)= Y(:,i)+sigma*randn(m,1); %  Almacenamiento de los datos sint??ticos
+%           D= (C(:,i)-H*Xb(:,en,i));   
+%          Xa(:,en,i)=Xb(:,en,i)+((K2\H')*(R\D));
+%     end
+%     Xb(:,:,i)=Xa(:,:,i);
+% else
+%      Xb(:,:,i)=Xb(:,:,i);
+% end
+% meanxa_EnKF(:,i)=mean(Xb(:,:,i),2);
+% end
+% %% ============================== Scenario EnKF_Schur_Localization ===================
+% % 
+% % if select==1
+% %   
+%  for i=2:Tsim-1
+% % %======== Forecast Step==========
+% %   for en=1:num
+% %       [X_schur(:,en,i)]=Lorenz_96_one_step(1,dt,squeeze(X_schur(:,en,i-1)),F);
+% %   end
+%  
+%    for en=1:num
+%       % FF=7;
+%       Dist=fact*randn(num,1);
+%       FF=FF+Dist(randi([1 num]),1);
+%      [X_schur(:,en,i)]=Lorenz_96_one_step(1,dt,squeeze(Xb(:,en,i-1)),FF);
+%    end
+%    
+%   
+%      meanxb(:,i)=mean(X_schur(:,:,i),2);    
+%      
+% if sum(muestreo==i)   %Validation if there are a observation available
 % %      
 % %    for Nen=1:N
-% %       XXb(:,Nen,i)= X_chol(:,Nen,i)-meanxb(:,i);  
+% %       XXb(:,Nen,i)= X_schur(:,Nen,i)-meanxb(:,i);  
 % %    end
-%   Xbp(:,:,i)=meanxb(:,i)*ones(1,N)+ pfactorEnkfMC*(X_chol(:,:,i)-meanxb(:,i)*ones(1,N));
-%   meanXbp(:,i) = mean(Xbp(:,:,i),2);   
-%   XXb(:,:,i) =Xbp(:,:,i)-meanXbp(:,i)*ones(1,N);
 % %   i
-% %    %XXa=XXb(:,:,i)*sqrt(1/(N-1));   
-% %     BC(:,:,i)=Calculo_B_Cholesky(XXb,r); %Estimation of Covariance by Modified Cholesky
-%     inB=Calculo_inB_Cholesky(XXb,r); %Estimation of invserse Covariance by Modified Cholesky
-% % %  Bsquare=B^(1/2);
-% % %  L=Xb(:,:,i)-meanxb;
-% % %     
-% % %%  Standard EnKF MC Background matrix 
-% % 
-% %   
-% %      
-% % %=============== Analysis Step ENKF MC========================================     
-% if sum(muestreo==i)   %Validation if there are a observation available    
-% % KC=BC(:,:,i)*H'*pinv(H*BC(:,:,i)*H'+R);     % Matriz de Ganancia de Kalman para cholesky
+%   Xbp(:,:,i)=meanxb(:,i)*ones(1,num)+ pfactorEnkfS*(X_schur(:,:,i)-meanxb(:,i)*ones(1,num));
+%   meanXbp(:,i) = mean(Xbp(:,:,i),2);   
+%   XXb(:,:,i) =Xbp(:,:,i)-meanXbp(:,i)*ones(1,num);
 % 
-%  K2C = (inB+ H'*(R\H));     
-% %      
-%       for en=1:N
+% % %  Standard EnKF Background matrix 
+% % 
+%     B=((1/(num-1))*(XXb(:,:,i)*XXb(:,:,i)'));
+%     L=localization_matrix(n,radi);
+%     B=pinv(L.*B); 
+% % %======================== Analysis Step ENKF=========================================
+% % muestra=0;     
+% %K=B*H'*pinv(H*B*H'+R);     % Matriz de Ganancia de Kalman
+%  
+%   K2 = (B+ H'*(R\H));
+%      for en=1:num
 % %          
 %           C(:,i)= Y(:,i)+sigma*randn(m,1);        %  Almacenamiento de los datos sint??ticos
-% %           Xa_C(:,en,i)=X_chol(:,en,i)+KC*(C(:,i)-H*X_chol(:,en,i));
-%           D= (C(:,i)-H*X_chol(:,en,i)); 
-%           Xa_C(:,en,i)= X_chol(:,en,i) + (K2\H')*(R\D);
-% % 
-%       end
-% %      
-%       X_chol(:,:,i)=Xa_C(:,:,i);
-%     
+%           D= (C(:,i)-H*Xb(:,en,i)); 
+%           Xa(:,en,i)=Xb(:,en,i)+(K2\H')*(R\D);
 %  
-% %      
-% 
+%      end
+%      X_schur(:,:,i)=Xa(:,:,i);
+%    
 % else
-%      X_chol(:,:,i)=X_chol(:,:,i);
-% end                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
-%  meanxa_EnKF_CHOLESKY(:,i)=mean(X_chol(:,:,i),2);
+%      X_schur(:,:,i)=X_schur(:,:,i);
+%  end
 % 
-% end
-%% ============================== Plots  ============================================
-%%% Taylor Diagrams
-% 
-% for j=1:n
-% [STATS] = taylor_statistics(meanxa_EnKF(j,1:i-20),Xreal(j,1:i-20));
-%      sdev_ENKF(j,:)=STATS.sdev;
-%      crmsd_ENKF(j,:)=STATS.crmsd;
-%      ccoef_ENKF(j,:)=STATS.ccoef;
-%      [STATS] = taylor_statistics(meanxa_EnKF_schur(j,1:i-20),Xreal(j,1:i-20));
-%      sdev_wrf(j,:)=STATS.sdev;
-%      crmsd_wrf(j,:)=STATS.crmsd;
-%      ccoef_wrf(j,:)=STATS.ccoef;
-%       [STATS] = taylor_statistics(meanxa_EnKF_CHOLESKY(j,1:i-20),Xreal(j,1:i-20));
-%      sdev_EnKF_MC(j,:)=STATS.sdev;
-%      crmsd_EnKF_MC(j,:)=STATS.crmsd;
-%      ccoef_EnKF_MC(j,:)=STATS.ccoef;
-%      
-      
-%      [STATS] = taylor_statistics(meanxa_EnKS(j,1:i-20),Xreal(j,1:i-20));
-%      sdev_EnKS(j,:)=STATS.sdev;
-%      crmsd_EnKS(j,:)=STATS.crmsd;
-%      ccoef_EnKS(j,:)=STATS.ccoef;
-%      [STATS] = taylor_statistics(meanxa_EnKS_chol(j,1:i-20),Xreal(j,1:i-20));
-%      sdev_EnKS_MC(j,:)=STATS.sdev;
-%      crmsd_EnKS_MC(j,:)=STATS.crmsd;
-%      ccoef_EnKS_MC(j,:)=STATS.ccoef;
-% end
-% label = containers.Map({'ENKF', 'ENKF Schur','ENKF MC','ENKS','ENKS MC'}, {'r.', 'b.','y.','c.','m.'});
+%    meanxa_EnKF_schur(:,i)=mean(X_schur(:,:,i),2); 
+%  end
+% % % 
+% % 
+% %% ============================== Scenario EnKF_MC ================================== 
+ 
 
-% taylor_diagram(sdev_ENKF(:,2),crmsd_ENKF(:,2),ccoef_ENKF(:,2),...
-%     'markerLabel',label,  'markerKey', 'ENKF', ...
-%     'markerSize',15,...
-%     'tickRMS',0.0:2.0:10.0,'tickRMSangle',110.0, ...
-%     'colRMS','g', 'styleRMS', ':', 'widthRMS', 2.0, ...
-%     'tickSTD',0.0:1.0:4.0, 'limSTD',8.0, ...
-%     'colSTD',[127/255 0 1], 'styleSTD', '-.', 'widthSTD', 1.0, ...
-%     'colCOR','k', 'styleCOR', '--', 'widthCOR', 1.0);
-% figure
+
+%if select==2
+  
+for i=2:Tsim-1
+%================= Forecast Step==========
+   for en=1:num
+     [X_chol(:,en,i)]=Lorenz_96_one_step(1,dt,squeeze(X_chol(:,en,i-1)),FF);
+   end
+   
+
+     meanxb(:,i)=mean(X_chol(:,:,i),2);    
+
+%      
+%    for Nen=1:N
+%       XXb(:,Nen,i)= X_chol(:,Nen,i)-meanxb(:,i);  
+%    end
+  Xbp(:,:,i)=meanxb(:,i)*ones(1,num)+ pfactorEnkfMC*(X_chol(:,:,i)-meanxb(:,i)*ones(1,num));
+  meanXbp(:,i) = mean(Xbp(:,:,i),2);   
+  XXb(:,:,i) =Xbp(:,:,i)-meanXbp(:,i)*ones(1,num);
+%   i
+%    %XXa=XXb(:,:,i)*sqrt(1/(N-1));   
+%     BC(:,:,i)=Calculo_B_Cholesky(XXb,r); %Estimation of Covariance by Modified Cholesky
+    inB=Calculo_inB_Cholesky(XXb,r); %Estimation of invserse Covariance by Modified Cholesky
+% %  Bsquare=B^(1/2);
+% %  L=Xb(:,:,i)-meanxb;
+% %     
+% %%  Standard EnKF MC Background matrix 
 % 
-% taylor_diagram(sdev_wrf(:,2),crmsd_wrf(:,2),ccoef_wrf(:,2),...
-%     'markerLabel',label,  'markerKey', 'ENKF Schur', ...
-%     'markerSize',15,...
-%     'tickRMS',0.0:2.0:10.0,'tickRMSangle',110.0, ...
-%     'colRMS','g', 'styleRMS', ':', 'widthRMS', 2.0, ...
-%     'tickSTD',0.0:1.0:4.0, 'limSTD',8.0, ...
-%     'colSTD',[127/255 0 1], 'styleSTD', '-.', 'widthSTD', 1.0, ...
-%     'colCOR','k', 'styleCOR', '--', 'widthCOR', 1.0);
+%   
+%      
+% %=============== Analysis Step ENKF MC========================================     
+if sum(muestreo==i)   %Validation if there are a observation available    
+% KC=BC(:,:,i)*H'*pinv(H*BC(:,:,i)*H'+R);     % Matriz de Ganancia de Kalman para cholesky
+
+ K2C = (inB+ H'*(R\H));     
+%      
+      for en=1:num
+%          
+          C(:,i)= Y(:,i)+sigma*randn(m,1);        %  Almacenamiento de los datos sint??ticos
+%           Xa_C(:,en,i)=X_chol(:,en,i)+KC*(C(:,i)-H*X_chol(:,en,i));
+          D= (C(:,i)-H*X_chol(:,en,i)); 
+          Xa_C(:,en,i)= X_chol(:,en,i) + (K2C\H')*(R\D);
 % 
-% figure
+      end
+%      
+      X_chol(:,:,i)=Xa_C(:,:,i);
+    
+ 
+%      
+
+else
+     X_chol(:,:,i)=X_chol(:,:,i);
+end                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+ meanxa_EnKF_CHOLESKY(:,i)=mean(X_chol(:,:,i),2);
+
+end
+% %% ============================== Plots  ============================================
+% %%% Taylor Diagrams
+% % 
+% % for j=1:n
+% % [STATS] = taylor_statistics(meanxa_EnKF(j,1:i-20),Xreal(j,1:i-20));
+% %      sdev_ENKF(j,:)=STATS.sdev;
+% %      crmsd_ENKF(j,:)=STATS.crmsd;
+% %      ccoef_ENKF(j,:)=STATS.ccoef;
+% %      [STATS] = taylor_statistics(meanxa_EnKF_schur(j,1:i-20),Xreal(j,1:i-20));
+% %      sdev_wrf(j,:)=STATS.sdev;
+% %      crmsd_wrf(j,:)=STATS.crmsd;
+% %      ccoef_wrf(j,:)=STATS.ccoef;
+% %       [STATS] = taylor_statistics(meanxa_EnKF_CHOLESKY(j,1:i-20),Xreal(j,1:i-20));
+% %      sdev_EnKF_MC(j,:)=STATS.sdev;
+% %      crmsd_EnKF_MC(j,:)=STATS.crmsd;
+% %      ccoef_EnKF_MC(j,:)=STATS.ccoef;
+% %      
+%       
+% %      [STATS] = taylor_statistics(meanxa_EnKS(j,1:i-20),Xreal(j,1:i-20));
+% %      sdev_EnKS(j,:)=STATS.sdev;
+% %      crmsd_EnKS(j,:)=STATS.crmsd;
+% %      ccoef_EnKS(j,:)=STATS.ccoef;
+% %      [STATS] = taylor_statistics(meanxa_EnKS_chol(j,1:i-20),Xreal(j,1:i-20));
+% %      sdev_EnKS_MC(j,:)=STATS.sdev;
+% %      crmsd_EnKS_MC(j,:)=STATS.crmsd;
+% %      ccoef_EnKS_MC(j,:)=STATS.ccoef;
+% % end
+% % label = containers.Map({'ENKF', 'ENKF Schur','ENKF MC','ENKS','ENKS MC'}, {'r.', 'b.','y.','c.','m.'});
 % 
-% taylor_diagram(sdev_ENKF(:,2),crmsd_ENKF(:,2),ccoef_ENKF(:,2),...
-%     'markerLabel',label,  'markerKey', 'ENKF', ...
-%     'markerSize',15,...
-%     'tickRMS',0.0:2.0:10.0,'tickRMSangle',50, ...
-%     'colRMS','g', 'styleRMS', ':', 'widthRMS', 2.0, ...
-%     'tickSTD',0.0:1.0:4.0, 'limSTD',8.0, ...
-%     'colSTD',[127/255 0 1], 'styleSTD', '-.', 'widthSTD', 1.0, ...
-%     'colCOR','k', 'styleCOR', '--', 'widthCOR', 1.0);
-% 
-% 
-% taylor_diagram(sdev_wrf(:,2),crmsd_wrf(:,2),ccoef_wrf(:,2),...
-%      'markerLabel',label,  'markerKey', 'ENKF Schur', ...
-%     'markerSize',15,...
-%     'tickRMS',0.0:2.0:10.0,'tickRMSangle',50, ...
-%     'colRMS','g', 'styleRMS', ':', 'widthRMS', 2.0, ...
-%     'tickSTD',0.0:1.0:4.0, 'limSTD',8.0, ...
-%     'colSTD',[127/255 0 1], 'styleSTD', '-.', 'widthSTD', 1.0, ...
-%     'colCOR','k', 'styleCOR', '--', 'widthCOR', 1.0);
-% 
-% 
-% 
+% % taylor_diagram(sdev_ENKF(:,2),crmsd_ENKF(:,2),ccoef_ENKF(:,2),...
+% %     'markerLabel',label,  'markerKey', 'ENKF', ...
+% %     'markerSize',15,...
+% %     'tickRMS',0.0:2.0:10.0,'tickRMSangle',110.0, ...
+% %     'colRMS','g', 'styleRMS', ':', 'widthRMS', 2.0, ...
+% %     'tickSTD',0.0:1.0:4.0, 'limSTD',8.0, ...
+% %     'colSTD',[127/255 0 1], 'styleSTD', '-.', 'widthSTD', 1.0, ...
+% %     'colCOR','k', 'styleCOR', '--', 'widthCOR', 1.0);
+% % figure
+% % 
 % % taylor_diagram(sdev_wrf(:,2),crmsd_wrf(:,2),ccoef_wrf(:,2),...
-% %     'overlay','on','markerSize',15,'markerLabelColor', 'b', ...
-% %     'markerLabel',label, 'markerKey', 'ENKF Schur');
+% %     'markerLabel',label,  'markerKey', 'ENKF Schur', ...
+% %     'markerSize',15,...
+% %     'tickRMS',0.0:2.0:10.0,'tickRMSangle',110.0, ...
+% %     'colRMS','g', 'styleRMS', ':', 'widthRMS', 2.0, ...
+% %     'tickSTD',0.0:1.0:4.0, 'limSTD',8.0, ...
+% %     'colSTD',[127/255 0 1], 'styleSTD', '-.', 'widthSTD', 1.0, ...
+% %     'colCOR','k', 'styleCOR', '--', 'widthCOR', 1.0);
+% % 
+% % figure
+% % 
+% % taylor_diagram(sdev_ENKF(:,2),crmsd_ENKF(:,2),ccoef_ENKF(:,2),...
+% %     'markerLabel',label,  'markerKey', 'ENKF', ...
+% %     'markerSize',15,...
+% %     'tickRMS',0.0:2.0:10.0,'tickRMSangle',50, ...
+% %     'colRMS','g', 'styleRMS', ':', 'widthRMS', 2.0, ...
+% %     'tickSTD',0.0:1.0:4.0, 'limSTD',8.0, ...
+% %     'colSTD',[127/255 0 1], 'styleSTD', '-.', 'widthSTD', 1.0, ...
+% %     'colCOR','k', 'styleCOR', '--', 'widthCOR', 1.0);
+% % 
+% % 
+% % taylor_diagram(sdev_wrf(:,2),crmsd_wrf(:,2),ccoef_wrf(:,2),...
+% %      'markerLabel',label,  'markerKey', 'ENKF Schur', ...
+% %     'markerSize',15,...
+% %     'tickRMS',0.0:2.0:10.0,'tickRMSangle',50, ...
+% %     'colRMS','g', 'styleRMS', ':', 'widthRMS', 2.0, ...
+% %     'tickSTD',0.0:1.0:4.0, 'limSTD',8.0, ...
+% %     'colSTD',[127/255 0 1], 'styleSTD', '-.', 'widthSTD', 1.0, ...
+% %     'colCOR','k', 'styleCOR', '--', 'widthCOR', 1.0);
+% % 
+% % 
+% % 
+% % % taylor_diagram(sdev_wrf(:,2),crmsd_wrf(:,2),ccoef_wrf(:,2),...
+% % %     'overlay','on','markerSize',15,'markerLabelColor', 'b', ...
+% % %     'markerLabel',label, 'markerKey', 'ENKF Schur');
+% % % 
 % % 
 % 
-
-% taylor_diagram(sdev_EnKF_MC(:,2),crmsd_EnKF_MC(:,2),ccoef_EnKF_MC(:,2),...
-%     'overlay','on','markerSize',15,'markerLabelColor', 'b', ...
-%     'markerLabel',label, 'markerKey', 'ENKF MC');
-% 
-% taylor_diagram(sdev_EnKS_MC(:,2),crmsd_EnKS(:,2),ccoef_EnKS(:,2),...
-%     'overlay','on','markerSize',15,'markerLabelColor', 'b', ...
-%     'markerLabel',label, 'markerKey', 'ENKS');
-% taylor_diagram(sdev_EnKS_MC(:,2),crmsd_EnKS_MC(:,2),ccoef_EnKS_MC(:,2),...
-%     'overlay','on','markerSize',15,'markerLabelColor', 'b', ...
-%     'markerLabel',label, 'markerKey', 'ENKS MC');
-%----------------------------------------------------------------------------------------------------------------
+% % taylor_diagram(sdev_EnKF_MC(:,2),crmsd_EnKF_MC(:,2),ccoef_EnKF_MC(:,2),...
+% %     'overlay','on','markerSize',15,'markerLabelColor', 'b', ...
+% %     'markerLabel',label, 'markerKey', 'ENKF MC');
+% % 
+% % taylor_diagram(sdev_EnKS_MC(:,2),crmsd_EnKS(:,2),ccoef_EnKS(:,2),...
+% %     'overlay','on','markerSize',15,'markerLabelColor', 'b', ...
+% %     'markerLabel',label, 'markerKey', 'ENKS');
+% % taylor_diagram(sdev_EnKS_MC(:,2),crmsd_EnKS_MC(:,2),ccoef_EnKS_MC(:,2),...
+% %     'overlay','on','markerSize',15,'markerLabelColor', 'b', ...
+% %     'markerLabel',label, 'markerKey', 'ENKS MC');
+% %----------------------------------------------------------------------------------------------------------------
 %%  Time propagation plot
 window=10;Fx=15;Ft=15; % Fontsize Xlabel Ylabel 
 % figure
@@ -453,40 +453,42 @@ set(gcf,'defaultTextInterpreter','latex');
 subplot(2,4,1)
 plot(Xreal(10,:),'Color','r','LineWidth',2)
 hold on
-cont;
-plot(meanxa_EnKF(10,:),'--b','LineWidth',2);hold on
-%  plot(meanxa_EnKF_CHOLESKY(10,1:i-20),'-.g','LineWidth',2)
-%  hold on
-plot(meanxa_EnKF_schur(10,1:i-20),'c','LineWidth',2)
-hold on
+% cont;
+% plot(meanxa_EnKF(10,:),'--b','LineWidth',2);
+% hold on
+% plot(meanxa_EnKF_schur(10,1:i-20),'c','LineWidth',2);
+% hold on
+ plot(meanxa_EnKF_CHOLESKY(10,1:i-20),'-.g','LineWidth',2)
+ hold on
 plot(meanxa_EnKS(10,1:i-20),':y','LineWidth',3)
 % % hold on
- plot(meanxa_EnKS_chol(10,1:i-20),'-.k','LineWidth',2)
- hold on
-% 
+%  plot(meanxa_EnKS_chol(10,1:i-20),'-.k','LineWidth',2)
+%  hold on
+%
+legend({'X truth','Xa EnKF MChol','Xa ENKS'})
 % legend({'X truth','Xa ENKF','Xa ENKF Schur','Xa ENKS'})
 % legend({'X truth','Xa ENKF'});
 % legend({'X truth','Xa ENKF','xA ENKS'});
-legend({'X truth','Xa ENKF','Xa ENKS','Xa ENKS MChol'})
+% legend({'X truth','Xa ENKF','Xa ENKS','Xa ENKS MChol'})
 % legend({'X truth','Xa ENKF','Xa ENKF Schur','Xa ENKS','Xa ENKS MChol'})
-% legend({'X truth','Xa ENKF','Xa ENKF Schur','EnKF MC','Xa ENKS','Xa ENKS MChol'})
+%legend({'X truth','Xa ENKF','Xa ENKF Schur','EnKF MC','Xa ENKS','Xa ENKS MChol'})
 title('State 10','FontSize',Ft,'interpreter','latex','interpreter','latex')
 xlim([1 Tsim-window])
 subplot(2,4,5)
 for i=1:Tsim
-Error_ENKF(i)=norm(abs(sum(meanxa_EnKF(10,i)-Xreal(10,i))));hold on
-Error_ENKF_schur(i)=norm(abs(sum(meanxa_EnKF_schur(10,i)-Xreal(10,i))));hold on 
+% Error_ENKF(i)=norm(abs(sum(meanxa_EnKF(10,i)-Xreal(10,i))));hold on
+% Error_ENKF_schur(i)=norm(abs(sum(meanxa_EnKF_schur(10,i)-Xreal(10,i))));hold on 
 Error_ENKS(i)=norm(abs(sum(meanxa_EnKS(10,i)-Xreal(10,i))));hold on
-Error_ENKS_chol(i)=norm(abs(sum(meanxa_EnKS_chol(10,i)-Xreal(10,i))));hold on
-% Error_ENKF_MC(i)=norm(abs(sum(meanxa_EnKF_CHOLESKY(10,i)-Xreal(10,i))));hold on
+% Error_ENKS_chol(i)=norm(abs(sum(meanxa_EnKS_chol(10,i)-Xreal(10,i))));hold on
+ Error_ENKF_MC(i)=norm(abs(sum(meanxa_EnKF_CHOLESKY(10,i)-Xreal(10,i))));hold on
 % set(gca, 'YScale', 'log')
 end
 %  plot(movmean(Error_ENKF,window),'Color',[0.5,0.02*cont,0.2]);hold on
-  plot(movmean(Error_ENKF,window));hold on
-  plot(movmean(Error_ENKF_schur,window));hold on
-% plot(movmean(Error_ENKF_MC,window));hold on
-  plot(movmean(Error_ENKS,window));hold on
- plot(movmean(Error_ENKS_chol,window));hold on
+%   plot(movmean(Error_ENKF,window));hold on
+%   plot(movmean(Error_ENKF_schur,window));hold on
+ plot(movmean(Error_ENKF_MC,window));hold on
+ plot(movmean(Error_ENKS,window));hold on
+%  plot(movmean(Error_ENKS_chol,window));hold on
 
 %legend({'EnKF'})
 %legend({'EnKF','EnKS'})
